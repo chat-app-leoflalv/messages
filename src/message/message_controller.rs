@@ -1,5 +1,3 @@
-use sqlx::{Database, Pool};
-
 use super::{
     dtos::{
         create_message_request::CreateMessageRequestDto,
@@ -8,25 +6,22 @@ use super::{
     message_model::Message,
 };
 
-pub struct MessageService<T: Database> {
-    db_conn: Pool<T>,
-}
+pub struct MessageController {}
 
-impl<T: Database> MessageService<T> {
-    pub fn new(db_conn: Pool<T>) -> Self {
-        MessageService { db_conn }
+impl MessageController {
+    pub fn new() -> Self {
+        MessageController {}
     }
 
     pub fn create_message<'a>(self, _req: CreateMessageRequestDto) -> Message<'a> {
-        todo!()
+        unimplemented!()
     }
 
     pub fn delete_message<'a>(self, _id: &str) -> Message<'a> {
-        todo!()
+        unimplemented!()
     }
 
     pub fn edit_message<'a>(self, _id: &str, _req: EditMessageRequestDto) -> Message<'a> {
-        todo!()
+        unimplemented!()
     }
 }
-
