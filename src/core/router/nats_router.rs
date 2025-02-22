@@ -1,15 +1,16 @@
+use anyhow::Result;
 use async_nats::service::{Request, Service, ServiceExt};
 use async_trait::async_trait;
 use futures::StreamExt;
 
-use super::Transport;
+use super::Router;
 
-pub struct NatsTransport {
+pub struct NatsRouter {
     service: Service,
 }
 
 #[async_trait]
-impl Transport for NatsTransport {
+impl Router for NatsRouter {
     type HandlerArgs = Request;
 
     async fn new(server_path: &str, name: &str, version: &str) -> Result<Self, anyhow::Error> {
@@ -20,12 +21,12 @@ impl Transport for NatsTransport {
             .await
             .map_err(|e| anyhow::Error::msg(e.to_string()))?;
 
-        Ok(NatsTransport { service })
+        Ok(NatsRouter { service })
     }
 
     async fn add_handler<F>(&mut self, route: &'static str, handler: F) -> Result<(), anyhow::Error>
     where
-        F: Fn(Self::HandlerArgs) + Send + Sync + 'static,
+        F: Fn(Self::HandlerArgs) -> Result<(), anyhow::Error> + Send + Sync + 'static,
     {
         let mut endpoint = self
             .service

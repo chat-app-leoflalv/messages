@@ -1,11 +1,6 @@
-use super::{
-    dtos::{
-        create_message_request::CreateMessageRequestDto,
-        edit_message_request::EditMessageRequestDto,
-    },
-    message_model::Message,
-};
+use async_nats::service::Request;
 
+#[derive(Clone, Copy)]
 pub struct MessageController {}
 
 impl MessageController {
@@ -13,15 +8,15 @@ impl MessageController {
         MessageController {}
     }
 
-    pub fn create_message<'a>(self, _req: CreateMessageRequestDto) -> Message<'a> {
-        unimplemented!()
+    pub fn create_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+        todo!()
     }
 
-    pub fn delete_message<'a>(self, _id: &str) -> Message<'a> {
-        unimplemented!()
+    pub fn delete_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+        todo!()
     }
 
-    pub fn edit_message<'a>(self, _id: &str, _req: EditMessageRequestDto) -> Message<'a> {
-        unimplemented!()
+    pub fn edit_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+        todo!()
     }
 }
