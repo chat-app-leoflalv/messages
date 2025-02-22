@@ -7,7 +7,7 @@ pub mod nats_transport;
 pub trait TransportLayer {
     type HandlerArgs;
 
-    async fn new(server_conn: &str) -> Result<Self>
+    async fn new(server_conn: &str, name: &str, version: &str) -> Result<Self>
     where
         Self: Sized;
 
