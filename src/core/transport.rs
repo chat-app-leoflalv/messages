@@ -4,7 +4,7 @@ use async_trait::async_trait;
 pub mod nats_transport;
 
 #[async_trait]
-pub trait TransportLayer {
+pub trait Transport {
     type HandlerArgs;
 
     async fn new(server_conn: &str, name: &str, version: &str) -> Result<Self>

@@ -2,14 +2,14 @@ use async_nats::service::{Request, Service, ServiceExt};
 use async_trait::async_trait;
 use futures::StreamExt;
 
-use super::TransportLayer;
+use super::Transport;
 
 pub struct NatsTransport {
     service: Service,
 }
 
 #[async_trait]
-impl TransportLayer for NatsTransport {
+impl Transport for NatsTransport {
     type HandlerArgs = Request;
 
     async fn new(server_path: &str, name: &str, version: &str) -> Result<Self, anyhow::Error> {
