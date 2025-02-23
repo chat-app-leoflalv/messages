@@ -8,15 +8,19 @@ impl MessageController {
         MessageController {}
     }
 
-    pub fn create_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+    pub fn get_messages(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
         todo!()
     }
 
-    pub fn delete_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+    pub fn send_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
         todo!()
     }
 
-    pub fn edit_message(self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+    pub fn delete_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
+        todo!()
+    }
+
+    pub fn edit_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
         todo!()
     }
 }
