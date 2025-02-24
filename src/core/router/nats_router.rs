@@ -35,7 +35,7 @@ impl Router for NatsRouter {
             .map_err(|e| anyhow::Error::msg(e.to_string()))?;
 
         while let Some(request) = endpoint.next().await {
-            handler(request);
+            handler(request)?;
         }
 
         Ok(())
