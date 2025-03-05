@@ -1,7 +1,16 @@
-use std::error::Error;
+use messages::{
+    config::envs::Envs,
+    core::router::{nats_router::NatsRouter, Router},
+    routes,
+};
 use tokio;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
+async fn main() -> anyhow::Result<()> {
+    let envs = Envs::new();
+
+    let router = NatsRouter::connect("nats://nats-server:4222", "messages", "1.0.0").await?;
+    routes(router).await?;
+
     Ok(())
 }

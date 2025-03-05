@@ -8,8 +8,12 @@ impl MessageController {
         MessageController {}
     }
 
-    pub fn get_messages(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
-        todo!()
+    pub async fn get_messages(&self, req: Request) -> anyhow::Result<()> {
+        println!(">>>>");
+        println!("{:?}: ", req.message.payload);
+        println!(">>>>");
+        req.respond(Ok("hello".into())).await?;
+        Ok(())
     }
 
     pub fn send_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {

@@ -1,3 +1,5 @@
+use std::future::Future;
+
 use anyhow::Result;
 use async_trait::async_trait;
 
@@ -7,11 +9,12 @@ pub mod nats_router;
 pub trait Router {
     type HandlerArgs;
 
-    async fn new(server_conn: &str, name: &str, version: &str) -> Result<Self>
+    async fn connect(server_conn: &str, name: &str, version: &str) -> Result<Self>
     where
         Self: Sized;
 
-    async fn add_handler<F>(&mut self, route: &'static str, handler: F) -> Result<()>
+    async fn add_handler<F, Fut>(&mut self, route: &'static str, handler: F) -> Result<()>
     where
-        F: Fn(Self::HandlerArgs) -> Result<(), anyhow::Error> + Send + Sync + 'static;
+        F: Fn(Self::HandlerArgs) -> Fut + Send + Sync + 'static,
+        Fut: Future<Output = Result<(), anyhow::Error>> + Send;
 }
