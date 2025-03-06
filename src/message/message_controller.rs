@@ -1,4 +1,7 @@
 use async_nats::service::Request;
+use serde_json::json;
+
+use crate::common::transform::value_to_bytes;
 
 #[derive(Clone, Copy)]
 pub struct MessageController {}
@@ -9,10 +12,10 @@ impl MessageController {
     }
 
     pub async fn get_messages(&self, req: Request) -> anyhow::Result<()> {
-        println!(">>>>");
-        println!("{:?}: ", req.message.payload);
-        println!(">>>>");
-        req.respond(Ok("hello".into())).await?;
+        let json = json!({"data": "test"});
+        let response = value_to_bytes(&json)?;
+
+        req.respond(Ok(response)).await?;
         Ok(())
     }
 

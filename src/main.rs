@@ -9,7 +9,7 @@ use tokio;
 async fn main() -> anyhow::Result<()> {
     let envs = Envs::new();
 
-    let router = NatsRouter::connect("nats://nats-server:4222", "messages", "1.0.0").await?;
+    let router = NatsRouter::connect(&envs.server_url, "messages", "1.0.0").await?;
     routes(router).await?;
 
     Ok(())

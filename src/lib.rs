@@ -3,6 +3,7 @@ use core::router::Router;
 use async_nats::service::Request;
 use message::message_controller::MessageController;
 
+pub mod common;
 pub mod config;
 pub mod core;
 pub mod message;
