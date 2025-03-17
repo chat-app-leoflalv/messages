@@ -18,6 +18,7 @@ impl<T: Database> MessageService<T> {
     }
 
     pub fn create_message<'a>(self, _req: CreateMessageRequestDto) -> Message<'a> {
+        let _a = self.db_conn;
         todo!()
     }
 

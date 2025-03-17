@@ -1,33 +1,55 @@
+use std::sync::Arc;
+
 use async_nats::service::Request;
 use serde_json::json;
 
-use crate::common::transform::value_to_bytes;
+use crate::common::{state::MessagesState, transform::value_to_bytes};
 
-#[derive(Clone, Copy)]
-pub struct MessageController {}
+pub async fn get_messages(_state: Arc<MessagesState>, req: Request) -> anyhow::Result<()> {
+    let json = json!({"data": "get_messages"});
+    let response = value_to_bytes(&json)?;
 
-impl MessageController {
-    pub fn new() -> Self {
-        MessageController {}
-    }
+    println!("get_messages");
 
-    pub async fn get_messages(&self, req: Request) -> anyhow::Result<()> {
-        let json = json!({"data": "test"});
-        let response = value_to_bytes(&json)?;
+    req.respond(Ok(response)).await?;
+    Ok(())
+}
 
-        req.respond(Ok(response)).await?;
-        Ok(())
-    }
+pub async fn send_message(
+    _state: Arc<MessagesState>,
+    req: Request,
+) -> anyhow::Result<(), anyhow::Error> {
+    let json = json!({"data": "send_messages"});
+    let response = value_to_bytes(&json)?;
 
-    pub fn send_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
-        todo!()
-    }
+    println!("send_messages");
 
-    pub fn delete_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
-        todo!()
-    }
+    req.respond(Ok(response)).await?;
+    Ok(())
+}
 
-    pub fn edit_message(&self, _req: Request) -> anyhow::Result<(), anyhow::Error> {
-        todo!()
-    }
+pub async fn delete_message(
+    _state: Arc<MessagesState>,
+    req: Request,
+) -> anyhow::Result<(), anyhow::Error> {
+    let json = json!({"data": "delete_message"});
+    let response = value_to_bytes(&json)?;
+
+    println!("delete_message");
+
+    req.respond(Ok(response)).await?;
+    Ok(())
+}
+
+pub async fn edit_message(
+    _state: Arc<MessagesState>,
+    req: Request,
+) -> anyhow::Result<(), anyhow::Error> {
+    let json = json!({"data": "edit_message"});
+    let response = value_to_bytes(&json)?;
+
+    println!("edit_message");
+
+    req.respond(Ok(response)).await?;
+    Ok(())
 }

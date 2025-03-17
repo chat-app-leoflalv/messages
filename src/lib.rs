@@ -1,24 +1,22 @@
-use core::router::Router;
+use core::router::Route;
 
 use async_nats::service::Request;
-use message::message_controller::MessageController;
+use common::state::MessagesState;
+use message::message_controller;
 
 pub mod common;
 pub mod config;
 pub mod core;
 pub mod message;
 
-pub async fn routes<R>(mut router: R) -> anyhow::Result<()>
+pub fn routes<R>(mut router: R) -> R
 where
-    R: Router<HandlerArgs = Request> + 'static,
+    R: Route<MessagesState, HandlerArgs = Request>,
 {
-    let controller = MessageController::new();
+    router.add_handler("message.get_messages", message_controller::get_messages);
+    router.add_handler("message.send_message", message_controller::send_message);
+    router.add_handler("message.delete_message", message_controller::delete_message);
+    router.add_handler("message.edit_message", message_controller::edit_message);
 
     router
-        .add_handler("message.get_messages", move |req| async move {
-            controller.get_messages(req).await
-        })
-        .await?;
-
-    Ok(())
 }
