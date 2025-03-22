@@ -15,10 +15,12 @@ pub trait Route<S: SafeState> {
     where
         Self: Sized;
 
-    fn add_handler<F, Fut>(&mut self, route: &'static str, handler: F)
+    fn add_handler<F, Fut>(&mut self, route: &str, handler: F)
     where
         F: Fn(Arc<S>, Self::HandlerArgs) -> Fut + Send + Sync + 'static,
         Fut: Future<Output = Result<(), anyhow::Error>> + Send + 'static;
 
     async fn serve(&mut self) -> Result<()>;
+
+    async fn stop(self) -> Result<()>;
 }

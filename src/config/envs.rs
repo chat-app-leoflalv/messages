@@ -1,6 +1,7 @@
 use dotenv::dotenv;
 use std::{env, u16};
 
+#[derive(Debug)]
 pub struct Envs {
     pub port: u16,
     pub server_url: String,
